@@ -1,0 +1,70 @@
+<form novalidate #contactForm="ngForm" class="contact-form" 
+  (ngSubmit)="onSubmit()">  
+   <div class="container-form">
+      <mat-form-field class="name-width" 
+        hintLabel="Max 20 characters">
+        <input matInput 
+          placeholder="Please enter your Name" 
+          type="text" 
+            [(ngModel)]="contact.name" 
+            name="nm" 
+            #nm="ngModel"
+            required
+            maxlength="20"
+            >
+            <mat-hint align="end"> 
+              {{nm.value?.length || 0}}/20
+            </mat-hint>
+            <mat-error>
+              <div *ngIf="nm.touched && !nm.valid">
+                <div *ngIf="nm.errors.required"> 
+                  Name is required
+                </div>
+              </div>
+            </mat-error>
+      </mat-form-field> 
+      
+     <mat-form-field class="email-width">
+          <input matInput 
+            placeholder="Please enter your email" 
+            type="email" 
+            [(ngModel)]="contact.email" 
+            name="el" 
+            #el="ngModel"
+            pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+            required
+          >
+              <mat-error>
+                <div *ngIf="el.touched && !el.valid">
+                  <div *ngIf="el.errors.required"> 
+                    Email is required
+                  </div>
+                  <div *ngIf="el.errors.pattern"> 
+                      Email is not valid
+                    </div>
+                </div>
+              </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Please select State">
+            <mat-option *ngFor="let state of states" 
+                [value]="state.value">
+              {{ state.text }}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+    </div>
+
+   <button mat-button type="reset">Clear</button>
+   <button type="submit" mat-button
+      [disabled]="contactForm.form.invalid"
+       class="background-primary text-floral-white"          
+      >
+      Submit
+  </button>
+</form>
+<div>
+  &nbsp;
+</div>
+
